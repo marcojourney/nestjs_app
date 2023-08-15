@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { CatsModule } from './modules/cats/cats.module';
@@ -20,8 +19,6 @@ import { RolesModule } from './modules/roles/roles.module';
 import { Session } from './modules/auth/session.entity';
 import { User } from './modules/users/entities/user.entity';
 import { Role } from './modules/roles/entities/role.entity';
-import { SummaryTransactionModule } from './summary_transaction/summary_transaction.module';
-import { ReportsModule } from './modules/reports/reports.module';
 
 @Module({
   controllers: [AppController],
@@ -47,7 +44,6 @@ import { ReportsModule } from './modules/reports/reports.module';
       ],
       logging: true,
     }),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/first_app'),
     CatsModule,
     OwnersModule,
     AuthModule,
@@ -55,9 +51,7 @@ import { ReportsModule } from './modules/reports/reports.module';
     CustomersModule,
     TransactionModule,
     BankAccountModule,
-    RolesModule,
-    SummaryTransactionModule,
-    ReportsModule
+    RolesModule
   ],
 })
 export class AppModule {}

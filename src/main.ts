@@ -14,7 +14,6 @@ async function bootstrap() {
     .addTag('users')
     .addTag('roles')
     .addTag('cats')
-    .addTag('summary-transaction')
     .addTag('owners')
     .addTag('customers')
     .addTag('bank_accounts')
