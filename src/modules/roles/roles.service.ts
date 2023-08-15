@@ -4,17 +4,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { Role } from './entities/role.entity';
-import { User } from '../users/entities/user.entity';
+// import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class RolesService {
   constructor(
     @InjectRepository(Role) private roleRepository: Repository<Role>,
-    @InjectRepository(User) private userRepository: Repository<User>,
+    // @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
   create(createRoleDto: CreateRoleDto) {
-    const user = this.userRepository.findOne({ where: { id: 3 } });
+    // const user = this.userRepository.findOne({ where: { id: 3 } });
     const role = this.roleRepository.save(createRoleDto);
     return role;
   }

@@ -19,10 +19,18 @@ import { RolesModule } from './modules/roles/roles.module';
 import { Session } from './modules/auth/session.entity';
 import { User } from './modules/users/entities/user.entity';
 import { Role } from './modules/roles/entities/role.entity';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './modules/auth/role.guard';
 
 @Module({
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard
+    }
+  ],
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({

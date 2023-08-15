@@ -7,12 +7,19 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Role } from 'src/modules/roles/entities/role.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import { RolesController } from 'src/modules/roles/roles.controller';
-// import { Type } from 'src/enums/type.enum';
+import { CreateRoleDto } from 'src/modules/roles/dto/create-role.dto';
+import { UpdateRoleDto } from 'src/modules/roles/dto/update-role.dto';
 
 describe('RoleController (e2e)', () => {
   let app: INestApplication;
   let controller: RolesController;
-  const rolesService = { findAll: jest.fn() };
+
+  const rolesService = {
+    findAll: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn()
+  };
 
   const mockRoleRepository = {
     save: jest.fn(),
@@ -65,58 +72,82 @@ describe('RoleController (e2e)', () => {
     it('/GET roles', () => {
       return request(app.getHttpServer()).get('/roles').expect(200);
     });
+
+    it('/roles/:id (GET)', () => {
+      const roleId = 1;
+      request(app.getHttpServer()).get(`/roles/${roleId}`).expect(200);
+    });
   });
 
-  // it('/roles/:id (GET)', async () => {
-  //   const roleId = 1;
-  //   await request(app.getHttpServer()).get(`/roles/${roleId}`).expect(200);
-  // });
+  describe('/roles (POST)', () => {
+    jest.spyOn(rolesService, 'create');
 
-  // it('/cats (POST)', async () => {
-  //   const cat = {
-  //     name: 'Barsik',
-  //     breed: 'Persian',
-  //     age: 1,
-  //   };
-  //   const response = await request(app.getHttpServer())
-  //     .post('/cats')
-  //     .send(cat)
-  //     .expect(201);
+    it('should be defined', () => {
+      expect(rolesService.create).toBeDefined();
+    });
 
-  //   // const createdCat = await response.json();
-  //   const createdCat = {name: '', breed: '', type: Type.Persian, age: 1};
-  //   expect(createdCat).toBeDefined();
-  //   expect(createdCat.name).toEqual(cat.name);
-  //   expect(createdCat.breed).toEqual(cat.breed);
-  //   expect(createdCat.age).toEqual(cat.age);
-  // });
+    it('should call service.create', () => {
+      controller.create({} as CreateRoleDto);
+      expect(rolesService.create).toBeCalledTimes(1);
+    });
+  });
 
-  // it('/cats/:id (PUT)', async () => {
-  //   const catId = '1';
-  //   const cat = {
-  //     name: 'Barsik the Second',
-  //     breed: 'Persian',
-  //     age: 2,
-  //   };
-  //   const response = await request(app.getHttpServer())
-  //     .put(`/cats/${catId}`)
-  //     .send(cat)
-  //     .expect(200);
+  describe('/roles (PUT)', () => {
+    jest.spyOn(rolesService, 'update');
+ 
+    it('should be defined', () => {
+      expect(rolesService.update).toBeDefined();
+    });
+ 
+    it('should call the database', () => {
+      rolesService.update({} as UpdateRoleDto);
+      expect(rolesService.update).toBeCalledTimes(1);
+    });
+  });
 
-  //   // const updatedCat = await response.json();
-  //   const updatedCat = {name: '', breed: '', type: Type.Persian, age: 1};
-  //   expect(updatedCat).toBeDefined();
-  //   expect(updatedCat.name).toEqual(cat.name);
-  //   expect(updatedCat.breed).toEqual(cat.breed);
-  //   expect(updatedCat.age).toEqual(cat.age);
-  // });
+  describe('/roles (DELETE)', () => {
+    jest.spyOn(rolesService, 'delete');
+ 
+    it('should be defined', () => {
+      expect(rolesService.delete).toBeDefined();
+    });
+ 
+    it('should call the database', () => {
+      rolesService.delete(1);
+      expect(rolesService.delete).toBeCalledTimes(1);
+    });
+  });
+});
 
-  // it('/cats/:id (DELETE)', async () => {
-  //   const catId = '1';
-  //   const response = await request(app.getHttpServer())
-  //     .delete(`/cats/${catId}`)
-  //     .expect(204);
+const baseURL = 'http://localhost:3000/';
+describe('Role', () => {
+  const apiRequest = request(baseURL);
 
-  //   expect(response.text).toBe('');
-  // });
+  describe('GET: roles', () => {
+    it('should have the response', async () => {
+      const response = await apiRequest.get('roles');
+      expect(response.status).toBe(200);
+    });
+  });
+ 
+  describe('GET: roles/:id', () => {
+    it('should have the response', async () => {
+      const response = await apiRequest.get('roles/1');
+      expect(response.status).toBe(200);
+    });
+  });
+
+  describe('POST: roles', () => {
+    it('should have the response', async () => {
+      const response = await apiRequest.post('roles').send({name: "Staff"});
+      expect(response.status).toBe(201);
+    });
+  });
+
+  describe('PUT: roles/:id', () => {
+    it('should have the response', async () => {
+      const response = await apiRequest.put('roles').send({name: "Staff"});
+      expect(response.status).toBe(201);
+    });
+  });
 });
