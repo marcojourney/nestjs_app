@@ -2,7 +2,12 @@
 Here is a roadmap to help you become an AWS DevOps engineer:
 
 1. Learn the basics of DevOps. This includes understanding the principles of DevOps, such as continuous integration and continuous delivery (CI/CD), infrastructure as code (IaC), and automation.
-2. Get familiar with AWS services. This includes understanding the core AWS services such as EC2, S3, VPC, RDS, and IAM. You should also be familiar with the AWS DevOps tools and services, such as CodePipeline, CodeBuild, CodeDeploy, and CloudFormation.
+2. Get familiar with AWS services. This includes understanding the core AWS services such as EC2, S3, VPC, RDS, and IAM. 
+    You should also be familiar with the AWS DevOps tools and services, such as 
+    CodePipeline,
+    CodeBuild,
+    CodeDeploy
+    CloudFormation
 3. Gain experience with DevOps tools and technologies. There are many different DevOps tools and technologies available. You should get experience with a variety of tools, such as Git, Jenkins, Ansible, and Terraform.
 4. Build a portfolio of DevOps projects. This will help you demonstrate your skills to potential employers. You can build these projects on your own or contribute to open source projects.
 5. Get certified. There are a number of AWS DevOps certifications available. Getting certified can demonstrate your skills to potential employers.

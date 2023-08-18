@@ -14,7 +14,7 @@ Priority
     b. Easier to test
 
 3. Database
-    a. Migration
+    a. Migration[Done]
     b. Seeder
 
 4. Routing and guards
