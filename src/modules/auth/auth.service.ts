@@ -43,6 +43,10 @@ export class AuthService {
     return tokens;
   }
 
+  signOut(userId: number) {
+    return this.userRepository.update({ id: userId }, { refreshToken: null });
+  }
+
   async register(createUserDto: CreateUserDto) {
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(createUserDto.password, saltOrRounds);
@@ -98,7 +102,7 @@ export class AuthService {
       throw new ForbiddenException('Access Denied');
 
     const refreshTokenMatches = await bcrypt.compare(user.refreshToken, refreshToken,);
-
+    
     if (!refreshTokenMatches) 
       throw new ForbiddenException('Access Denied');
 
