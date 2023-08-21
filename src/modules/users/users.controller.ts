@@ -16,7 +16,6 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '../auth/auth.guard';
-import { AccessTokenGuard } from '../auth/accessToken.guard';
 
 @ApiBearerAuth()
 @Controller('users')
@@ -46,12 +45,15 @@ export class UsersController {
     @Param('id') id: string,
     @Req() request: Request
   ) {
-    // console.log(request.cookies);
+    console.log(request.cookies);
     return this.usersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id') id: string, 
+    @Body() updateUserDto: UpdateUserDto
+  ) {
     return this.usersService.update(+id, updateUserDto);
   }
 

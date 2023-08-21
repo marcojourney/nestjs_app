@@ -15,4 +15,3 @@ git reset <mode> <commit_hash>:  to undo changes that have been committed to the
         1. You can use the -n option with the git reset command to preview the changes that will be made without actually performing the reset. This can be helpful if you want to make sure that the reset is going to do what you want it to do.
         2. You can use the -f option with the git reset command to force the reset to be performed, even if there are conflicts. This can be useful if you are sure that you want to reset the commit and you don't care about the conflicts.
         3. You can use the -m <message> option with the git reset command to add a custom message to the commit. This can be helpful if you want to explain why you are resetting the commit.
-1

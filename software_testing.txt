@@ -1,7 +1,10 @@
 
 Sure. Test-driven development (TDD) and behavior-driven development (BDD) are two software development methodologies that can be used to improve the quality of software.
 
-TDD is a development process that starts with writing a failing unit test for a new feature or change. The developer then writes the code to make the test pass, and then refactors the code to improve its readability and maintainability. This process is repeated until all of the tests for the feature or change pass.
+TDD is a development process that starts with writing a failing unit test for a new feature or change. 
+The developer then writes the code to make the test pass, and then refactors the code to improve its readability and maintainability. 
+This process is repeated until all of the tests for the feature or change pass.
 
-BDD is a development process that is similar to TDD, but it focuses on the behavior of the software rather than the implementation details. BDD tests are written in a natural language format that is easy for both developers and non-technical stakeholders to understand.
+BDD is a development process that is similar to TDD, but it focuses on the behavior of the software rather than the implementation details. 
+BDD tests are written in a natural language format that is easy for both developers and non-technical stakeholders to understand.
 
