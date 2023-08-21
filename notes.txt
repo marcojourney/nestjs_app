@@ -6,7 +6,7 @@ Priority
     b. Implementation authentication[Done]
     c. Implementation authorization
     d. Encryption and Hashing[Done]
-    e. Check more deeply with JWT(Refresh Token, scope, Use a strong signing algorithm(RS256 or ES256), Use a long expiration time, Require re-authentication periodically, )
+    e. Check more deeply with JWT(Refresh Token, scope, Use a strong signing algorithm(RS256 or ES256), Use a long expiration time, Require re-authentication periodically)
     f. Oauth2
 
 2. Dependency injection

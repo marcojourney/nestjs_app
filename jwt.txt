@@ -18,3 +18,39 @@ Rotate your secret keys regularly. You should rotate your secret keys regularly.
 Be aware of the risks. No security measure is perfect. There is always some risk involved in using JWT tokens. You should be aware of the risks and take steps to mitigate them.
 
 //Change some code
+
+To be advanced in JWT, you should know the following:
+
+* The different parts of a JWT token, such as the header, payload, and signature.
+* How to generate and decode JWT tokens.
+* How to secure JWT tokens, such as using a secret key or signing algorithm.
+* How to use JWT tokens in a variety of applications, such as authentication and authorization.
+* The different types of attacks that can be used against JWT tokens, such as token forgery and token replay.
+* How to mitigate these attacks.
+
+Here are some additional things that you can learn to become advanced in JWT:
+
+* Learn about the different ways to store JWT tokens, such as in a database or in a cookie.
+* Learn about the different ways to revoke JWT tokens, such as when a user's account is deleted or when a user's password is changed.
+* Learn about the different ways to extend the lifespan of JWT tokens, such as using a refresh token.
+* Learn about the different ways to use JWT tokens with other technologies, such as OAuth 2.0 and OpenID Connect.
+
+I hope this helps! Let me know if you have any other questions.
+
+*************** HOW SIGNATURE WORKS IN JWT? ********************
+The signature in JWT is used to verify the authenticity of the token and to prevent tampering. The signature is created by combining the header, payload, and secret key using a cryptographic algorithm. The algorithm used to create the signature depends on the signing method that is used.
+
+The most common signing methods for JWT are HMAC and RSA. HMAC is a hash-based message authentication code that uses a secret key to create a signature. RSA is an asymmetric encryption algorithm that uses a public key and a private key to create a signature.
+
+When a JWT token is received, the signature is verified by combining the header, payload, and public key (if RSA is used). If the signature is valid, then the token is authentic and has not been tampered with.
+
+The signature in JWT is an important security feature that helps to protect the token from unauthorized access and tampering. By using a strong cryptographic algorithm and a secure secret key, the signature can help to ensure the integrity of the token.
+
+Here are some additional things to keep in mind about the signature in JWT:
+
+* The signature should be created using a strong cryptographic algorithm, such as HMAC or RSA.
+* The secret key should be kept secret and should not be shared with anyone.
+* The signature should be verified using the public key (if RSA is used) or the secret key (if HMAC is used).
+* The signature should be checked for validity before the token is used.
+
+By following these best practices, you can help to ensure that the signature in JWT is secure and that the token cannot be tampered with.

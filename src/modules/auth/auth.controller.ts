@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { CreateOwnerDto } from 'src/modules/owners/create-owner.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 
 @Controller('auth')
