@@ -30,7 +30,18 @@ export class UsersController {
 
   @UseGuards(AuthGuard)
   @Get()
-  findAll(@Res() res: Response) {
+  findAll() {
+    return this.usersService.findAll();
+  }
+
+  @UseGuards(AuthGuard)
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(+id);
+  }
+
+  @Get('set_cookies')
+  setCookie(@Res() res: Response) {
     return res.cookie('access_token', 'ACCESS_TOKEN', {
       httpOnly: true,
       secure: true,
@@ -39,14 +50,9 @@ export class UsersController {
     }).send({ status: 'ok' });
   }
 
-  @UseGuards(AuthGuard)
-  @Get(':id')
-  findOne(
-    @Param('id') id: string,
-    @Req() request: Request
-  ) {
-    console.log(request.cookies);
-    return this.usersService.findOne(+id);
+  @Get('get_cookies')
+  getCookie(@Req() request: Request) {
+    return request.cookies;
   }
 
   @Patch(':id')

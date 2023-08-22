@@ -6,18 +6,18 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Session } from './session.entity';
+// import { Session } from './session.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Session) private sessionRepository: Repository<Session>,
+    // @InjectRepository(Session) private sessionRepository: Repository<Session>,
     private jwtService: JwtService,
     private configService: ConfigService
   ) {}
@@ -37,7 +37,7 @@ export class AuthService {
   
     const tokens = await this.getTokens(user.id, user.userName);
     
-    await this.sessionRepository.insert({userId: user.id, accessToken: tokens.accessToken, userAgent, ip});
+    // await this.sessionRepository.insert({userId: user.id, accessToken: tokens.accessToken, userAgent, ip});
     await this.updateRefreshToken(user.id, tokens.refreshToken);
 
     return tokens;
@@ -75,7 +75,7 @@ export class AuthService {
         },
         {
           secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-          expiresIn: '1m',
+          expiresIn: '30m',
         },
       ),
       this.jwtService.signAsync(

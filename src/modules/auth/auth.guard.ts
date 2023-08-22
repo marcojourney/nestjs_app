@@ -24,13 +24,17 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const accessToken = this.extractTokenFromHeader(request);
     
-    const session = await this.sessionRepository.findOne({where: {accessToken}, select: ["accessToken"]});
+    // const session = await this.sessionRepository.findOne({where: {accessToken}, select: ["accessToken"]});
 
-    if (!session) {
+    // if (!session) {
+    //   throw new UnauthorizedException();
+    // }
+
+    const decoded: TokenPayload = plainToClass(TokenPayload, this.jwtService.decode(accessToken));
+    
+    if (!decoded) {
       throw new UnauthorizedException();
     }
-
-    const decoded: TokenPayload = plainToClass(TokenPayload, this.jwtService.decode(session.accessToken));
     
     if (!decoded.sub) {
       throw new UnauthorizedException('Invalid access token');
@@ -41,7 +45,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const payload = await this.jwtService.verifyAsync(session.accessToken, {secret: process.env.JWT_ACCESS_SECRET});
+      const payload = await this.jwtService.verifyAsync(accessToken, {secret: process.env.JWT_ACCESS_SECRET});
       
       request['user'] = payload;
     } catch(error) {
