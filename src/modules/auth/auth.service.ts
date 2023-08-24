@@ -37,7 +37,6 @@ export class AuthService {
   
     const tokens = await this.getTokens(user.id, user.userName);
     
-    // await this.sessionRepository.insert({userId: user.id, accessToken: tokens.accessToken, userAgent, ip});
     await this.updateRefreshToken(user.id, tokens.refreshToken);
 
     return tokens;

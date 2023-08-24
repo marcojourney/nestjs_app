@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { AppService } from './app.service';
 import { CatsModule } from './modules/cats/cats.module';
 import { OwnersModule } from './modules/owners/owners.module';
@@ -19,8 +20,9 @@ import { RolesModule } from './modules/roles/roles.module';
 import { Session } from './modules/auth/session.entity';
 import { User } from './modules/users/entities/user.entity';
 import { Role } from './modules/roles/entities/role.entity';
-import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './modules/auth/role.guard';
+import { ClientsModule } from './modules/clients/clients.module';
+import { Client } from './modules/clients/entities/client.entity';
 
 @Module({
   controllers: [AppController],
@@ -41,6 +43,7 @@ import { RolesGuard } from './modules/auth/role.guard';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [
+        Client,
         User,
         Role,
         Cat,
@@ -59,7 +62,8 @@ import { RolesGuard } from './modules/auth/role.guard';
     CustomersModule,
     TransactionModule,
     BankAccountModule,
-    RolesModule
+    RolesModule,
+    ClientsModule
   ],
 })
 export class AppModule {}

@@ -34,6 +34,15 @@ export class AuthController {
     return this.authService.signIn(username, password, ip, userAgent);
   }
 
+  // @Post('generates/clients')
+  // generateClient(
+  //   @Req() req: Request,
+  //   @Headers('name') name: string
+  // ) {
+  //   const userAgent = req.headers['user-agent'];
+  //   return this.authService.signIn(username, password, ip, userAgent);
+  // }
+
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   refreshTokens(
