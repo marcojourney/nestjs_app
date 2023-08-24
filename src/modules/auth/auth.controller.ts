@@ -15,7 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { RefreshTokenGuard } from './refreshToken.guard';
+import { RefreshTokenGuard } from './refresh-token.guard';
 
 @Controller('auth')
 @ApiTags('auth')
