@@ -4,7 +4,6 @@ import { CreateBankAccountDto } from './dto/create-bank_account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank_account.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BankAccount } from './entities/bank_account.entity';
-import { Util } from 'src/helpers/util.helper';
 
 @Injectable()
 export class BankAccountService {
