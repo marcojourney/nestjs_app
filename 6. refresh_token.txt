@@ -33,3 +33,5 @@ Use a token blacklist
     A token blacklist is a list of known-compromised tokens. If a refresh token is added to the token blacklist, the client application should not accept it. This can help prevent attackers from using compromised refresh tokens to obtain new access tokens.
 Use a token expiration policy
     Refresh tokens should expire after a certain period of time. This will help mitigate the risk of a refresh token being used after it has been compromised.
+
+https://www.elvisduru.com/blog/nestjs-jwt-authentication-refresh-token

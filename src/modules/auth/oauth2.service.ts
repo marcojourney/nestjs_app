@@ -41,17 +41,28 @@ export class OAuth2Service {
     try {
       const decoded = await this.jwtService.verifyAsync(authorizationCode, { secret: process.env.JWT_ACCESS_SECRET });
 
-      const accessToken = await this.jwtService.signAsync(
-        {
-          appI: decoded.appId
-        },
-        {
-          secret: process.env.JWT_ACCESS_SECRET,
-          expiresIn: '1d'
-        }
-      );
+      const [accessToken, refreshToken] = await Promise.all([
+        this.jwtService.signAsync(
+          {
+            appI: decoded.appId
+          },
+          {
+            secret: process.env.JWT_ACCESS_SECRET,
+            expiresIn: '30m',
+          },
+        ),
+        this.jwtService.signAsync(
+          {
+            appI: decoded.appId
+          },
+          {
+            secret: process.env.JWT_ACCESS_SECRET,
+            expiresIn: '7d',
+          },
+        ),
+      ]);
 
-      return { accessToken };
+      return { accessToken, refreshToken };
 
     } catch (error) {
       throw new UnauthorizedException('Authorization code verification failed.');
