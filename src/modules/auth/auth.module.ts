@@ -9,6 +9,8 @@ import { User } from '../users/entities/user.entity';
 import { AccessTokenStrategy } from './strategies/access-token.strategy';
 import { RefreshTokenStrategy } from './strategies/refresh-token.strategy';
 import { Client } from '../clients/entities/client.entity';
+import { OauthController } from './oauth2.controller';
+import { OAuth2Service } from './oauth2.service';
 
 @Module({
   imports: [
@@ -19,9 +21,10 @@ import { Client } from '../clients/entities/client.entity';
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, OauthController],
   providers: [
     AuthService,
+    OAuth2Service,
     JwtService,
     ConfigService,
     AccessTokenStrategy,

@@ -16,4 +16,7 @@ export class Client {
 
   @Column()
   origin: string;
+
+  @Column()
+  redirectUri: string;
 }

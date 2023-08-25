@@ -9,7 +9,8 @@ export class Clients1692860670499 implements MigrationInterface {
                 name VARCHAR(255),
                 appId VARCHAR(255),
                 appSecret VARCHAR(255),
-                origin VARCHAR(255)
+                origin VARCHAR(255),
+                redirectUri VARCHAR(255)
             );
         `);
     }
