@@ -21,7 +21,9 @@
     "typeorm": "ts-node ./node_modules/typeorm/cli",
     "migration:run": "nest build && npm run typeorm migration:run -- -d ./src/config/typeorm.ts",
     "migration:create": "npm run typeorm -- migration:create",
-    "migration:revert": "nest build && npm run typeorm -- -d ./src/config/typeorm.ts migration:revert"
+    "migration:revert": "nest build && npm run typeorm -- -d ./src/config/typeorm.ts migration:revert",
+    "entity:create": "ts-node ./cli/entity.cli.ts",
+    "service:create": "ts-node ./cli/service.cli.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -37,6 +39,7 @@
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "commander": "^11.0.0",
     "cookie-parser": "^1.4.6",
     "crypto-js": "^4.1.1",
     "moment": "^2.29.4",

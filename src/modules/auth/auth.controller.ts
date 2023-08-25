@@ -9,7 +9,7 @@ import {
   Body,
   Get,
   Query,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
@@ -48,7 +48,7 @@ export class AuthController {
   refreshTokens(
     @Query('userId') userId: number,
     @Query('refreshToken') refreshToken: string,
-    ) {
+  ) {
     return this.authService.refreshTokens(userId, refreshToken);
   }
 

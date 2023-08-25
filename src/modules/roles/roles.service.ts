@@ -9,8 +9,7 @@ import { Role } from './entities/role.entity';
 @Injectable()
 export class RolesService {
   constructor(
-    @InjectRepository(Role) private roleRepository: Repository<Role>,
-    // @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Role) private roleRepository: Repository<Role>, // @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
   create(createRoleDto: CreateRoleDto) {

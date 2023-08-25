@@ -44,7 +44,9 @@ export class BankAccountService {
   }
 
   async findOne(id: number): Promise<BankAccount> {
-    const bankAccount = await this.bankAccountRepository.findOne({where: {id}});
+    const bankAccount = await this.bankAccountRepository.findOne({
+      where: { id },
+    });
     return bankAccount;
   }
 

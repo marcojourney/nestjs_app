@@ -13,6 +13,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('auth')
     .addTag('users')
+    .addTag('clients')
     .addTag('roles')
     .addTag('cats')
     .addTag('owners')
@@ -24,7 +25,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  
+
   app.use(cookieParser());
   await app.listen(3000);
 }
