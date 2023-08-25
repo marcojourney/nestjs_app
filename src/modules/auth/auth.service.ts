@@ -9,7 +9,6 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-// import { Session } from './session.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { Client } from '../clients/entities/client.entity';
@@ -42,17 +41,62 @@ export class AuthService {
       const credentials = Buffer.from(base64Credentials, 'base64').toString('utf-8');
       const [appId, appSecret] = credentials.split(':');
 
-      const client = await this.clientRepository.findOne({where: {appId}});
+      const client = await this.clientRepository.findOne({where: {appId, appSecret}});
       
-      if (client?.appSecret != appSecret) {
+      if (!client) {
         throw new UnauthorizedException('Authentication successful');
       }
-      
       
       return { message: 'MESSAGE.OK' };
     }
 
     throw new UnauthorizedException('Unauthorized');
+  }
+
+  async jwtBasicGenerateToken(appId: string, appSecret: string) {
+    const client = await this.clientRepository.findOne({where: {appId, appSecret}});
+    
+    if (!client) throw new NotFoundException('Client not found');
+
+    const payload = {
+      appId,
+      appSecret,
+      scope: ['survey.create', 'survey.read']
+    };
+
+    const token = await this.jwtService.signAsync(
+      payload,
+      {
+        secret: process.env.JWT_ACCESS_SECRET
+      },
+    );
+
+    return {
+      token,
+      scope: ['survey.create', 'survey.read']
+    };
+  }
+
+  async jwtBasicVerifyToken(authorization: string) {
+    try {
+      if (authorization && authorization.startsWith('Basic ')) {
+        const basicToken = authorization.slice('Basic '.length);
+        
+        const payload = await this.jwtService.verifyAsync(basicToken, {
+          secret: process.env.JWT_ACCESS_SECRET,
+        });
+
+        const { appId, appSecret } = payload;
+
+        const client = await this.clientRepository.findOne({where: {appId, appSecret}});
+        if (!client) throw new UnauthorizedException('Authentication successful');  
+        
+        return { message: 'MESSAGE.OK' };
+      }
+
+    } catch (error) {
+      throw new UnauthorizedException('Unauthorized');
+    }
   }
 
   async signIn(userName: string, password: string, ip: string, userAgent: string) {

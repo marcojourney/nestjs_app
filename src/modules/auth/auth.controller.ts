@@ -50,6 +50,21 @@ export class AuthController {
     return this.authService.basicVerifyToken(authorization);
   }
 
+  @Post('v2/generate/basic-token')
+  jwtGenerateBasicToken(
+    @Headers('appId') appId: string, 
+    @Headers('appSecret') appSecret: string
+  ) {
+    return this.authService.jwtBasicGenerateToken(appId, appSecret);
+  }
+
+  @Post('v2/verify/basic-token')
+  jwtVerifyBasicToken(
+    @Headers('authorization') authorization: string
+  ) {
+     return this.authService.jwtBasicVerifyToken(authorization);
+  }
+
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   refreshTokens(
