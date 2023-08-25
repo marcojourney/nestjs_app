@@ -5,19 +5,20 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 import { Repository } from 'typeorm';
-import * as crypto from 'crypto';
-import { User } from '../users/entities/user.entity';
 import { Client } from '../clients/entities/client.entity';
+import { RegisterClientBody } from './register.body';
 
 @Injectable()
 export class OAuth2Service {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Client) private clientRepository: Repository<Client>,
     private jwtService: JwtService
   ) {}
+
+  async register(registerClientBody: RegisterClientBody) {
+
+  }
 
   async authorize(appId: string, redirectUri: string) {
     const client = await this.clientRepository.findOne({where: {appId}});
@@ -33,7 +34,7 @@ export class OAuth2Service {
     const authorizationCode = await this.jwtService.signAsync(payload, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '10m' });
 
     const redirectUrl = `${redirectUri}?code=${authorizationCode}`;
-    return redirectUrl;
+    return { redirectUrl };
   }
 
   async login(authorizationCode: string) {
