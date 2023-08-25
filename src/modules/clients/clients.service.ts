@@ -49,8 +49,9 @@ export class ClientsService extends BaseService {
     };
   }
 
-  findAll() {
-    return `This action returns all clients`;
+  signIn(appId: string, appSecret: string) {
+    const token = Buffer.from(`${appId}:${appSecret}`).toString('base64');
+    return token;
   }
 
   findOne(id: number) {

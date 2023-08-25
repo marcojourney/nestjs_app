@@ -34,14 +34,21 @@ export class AuthController {
     return this.authService.signIn(username, password, ip, userAgent);
   }
 
-  // @Post('generates/clients')
-  // generateClient(
-  //   @Req() req: Request,
-  //   @Headers('name') name: string
-  // ) {
-  //   const userAgent = req.headers['user-agent'];
-  //   return this.authService.signIn(username, password, ip, userAgent);
-  // }
+  @Post('v1/generate/basic-token')
+  generateBasicToken(
+    @Headers('appId') appId: string, 
+    @Headers('appSecret') appSecret: string
+  ) {
+    return this.authService.basicGenerateToken(appId, appSecret);
+  }
+
+  @Post('v1/verify/basic-token')
+  verifyBasicToken(
+    @Headers('authorization') authorization: string
+  ) {
+    //Notes: If we use postman, you can use Auth:Basic Auth then authorization header (Basic {token}) will be automatically generated when you send the request
+    return this.authService.basicVerifyToken(authorization);
+  }
 
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')

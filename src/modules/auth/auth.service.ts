@@ -12,15 +12,48 @@ import * as bcrypt from 'bcrypt';
 // import { Session } from './session.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import { Client } from '../clients/entities/client.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    // @InjectRepository(Session) private sessionRepository: Repository<Session>,
+    @InjectRepository(Client) private clientRepository: Repository<Client>,
     private jwtService: JwtService,
     private configService: ConfigService
   ) {}
+
+  async basicGenerateToken(appId: string, appSecret: string) {
+    const client = await this.clientRepository.findOne({where: {appId, appSecret}});
+    
+    if (!client) throw new NotFoundException('Client not found');
+
+    const token = Buffer.from(`${appId}:${appSecret}`).toString('base64');
+    return {
+      token,
+      scope: ['survey.create', 'survey.read'],
+      expireIn: '30d'
+    };
+  }
+
+  async basicVerifyToken(authorization: string) {
+    if (authorization && authorization.startsWith('Basic ')) {
+      const base64Credentials = authorization.slice('Basic '.length);
+      const credentials = Buffer.from(base64Credentials, 'base64').toString('utf-8');
+      const [appId, appSecret] = credentials.split(':');
+
+      const client = await this.clientRepository.findOne({where: {appId}});
+      
+      if (client?.appSecret != appSecret) {
+        throw new UnauthorizedException('Authentication successful');
+      }
+      
+      
+      return { message: 'MESSAGE.OK' };
+    }
+
+    throw new UnauthorizedException('Unauthorized');
+  }
 
   async signIn(userName: string, password: string, ip: string, userAgent: string) {
     const user: User = await this.userRepository.findOne({where: { userName }});

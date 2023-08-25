@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  Headers,
+  Req
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ClientsService } from './clients.service';
@@ -20,11 +22,6 @@ export class ClientsController {
   @Post()
   create(@Body() createClientDto: CreateClientDto) {
     return this.clientsService.create(createClientDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.clientsService.findAll();
   }
 
   @Get(':id')

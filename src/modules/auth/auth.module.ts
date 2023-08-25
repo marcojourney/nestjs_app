@@ -8,10 +8,11 @@ import { Session } from './session.entity';
 import { User } from '../users/entities/user.entity';
 import { AccessTokenStrategy } from './strategies/access-token.strategy';
 import { RefreshTokenStrategy } from './strategies/refresh-token.strategy';
+import { Client } from '../clients/entities/client.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Session]),
+    TypeOrmModule.forFeature([Client, User, Session]),
     JwtModule.register({
       global: true,
       secret: 'kolap',
