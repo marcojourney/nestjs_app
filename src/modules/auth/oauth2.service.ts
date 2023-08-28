@@ -26,6 +26,7 @@ export class OAuth2Service {
 
     const payload = {
       appId,
+      appSecret: client.appSecret,
     };
 
     // A short life time token will be expired in 10mn
@@ -47,7 +48,9 @@ export class OAuth2Service {
       const [accessToken, refreshToken] = await Promise.all([
         this.jwtService.signAsync(
           {
+            sub: decoded.appId,
             appI: decoded.appId,
+            scope: ['read'],
           },
           {
             secret: process.env.JWT_ACCESS_SECRET,
@@ -56,7 +59,9 @@ export class OAuth2Service {
         ),
         this.jwtService.signAsync(
           {
+            sub: decoded.appId,
             appI: decoded.appId,
+            scope: ['read'],
           },
           {
             secret: process.env.JWT_ACCESS_SECRET,

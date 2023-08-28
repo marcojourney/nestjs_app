@@ -11,6 +11,7 @@ export class OauthController {
     return this.oAuth2Service.register(registerClientBody);
   }
 
+<<<<<<< HEAD
   @Get('/authorize')
   authorize(
     @Query('appId') appId: string,
@@ -18,6 +19,16 @@ export class OauthController {
   ) {
     return this.oAuth2Service.authorize(appId, redirectUri);
   }
+=======
+    @Get('/authorize')
+    authorize(
+        @Query('appId') appId: string,
+        @Query('scope') scope: string,
+        @Query('redirectUri') redirectUri: string
+    ) {
+        return this.oAuth2Service.authorize(appId, redirectUri);
+    }
+>>>>>>> 325948023d20288f23eef2384a1c854a80d6a076
 
   @Get('/token')
   getToken(@Query('authorizationCode') authorizationCode: string) {
