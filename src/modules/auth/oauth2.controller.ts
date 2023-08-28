@@ -16,6 +16,7 @@ export class OauthController {
     @Get('/authorize')
     authorize(
         @Query('appId') appId: string,
+        @Query('scope') scope: string,
         @Query('redirectUri') redirectUri: string
     ) {
         return this.oAuth2Service.authorize(appId, redirectUri);

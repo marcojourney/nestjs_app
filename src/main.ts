@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
+import * as cors from 'cors';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -27,6 +28,33 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.use(cookieParser());
+
+  const corsOptions = {
+    origin: function (origin, callback) {console.log('DDDDD:', origin);
+      // db.loadOrigins is an example call to load
+      // a list of origins from a backing database
+      // db.loadOrigins(function (error, origins) {
+      //   callback(error, origins)
+      // })
+
+      callback(null, { origin: false })
+    }
+  }
+
+  app.enableCors({
+    origin: [
+      'http://localhost:3001',
+      'http://example.com',
+      'http://www.example.com',
+      'http://app.example.com',
+      'https://example.com',
+      'https://www.example.com',
+      'https://app.example.com',
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  });
+  
   await app.listen(3000);
 }
 
