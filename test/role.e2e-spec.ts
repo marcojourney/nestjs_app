@@ -18,7 +18,7 @@ describe('RoleController (e2e)', () => {
     findAll: jest.fn(),
     create: jest.fn(),
     update: jest.fn(),
-    delete: jest.fn()
+    delete: jest.fn(),
   };
 
   const mockRoleRepository = {
@@ -94,11 +94,11 @@ describe('RoleController (e2e)', () => {
 
   describe('/roles (PUT)', () => {
     jest.spyOn(rolesService, 'update');
- 
+
     it('should be defined', () => {
       expect(rolesService.update).toBeDefined();
     });
- 
+
     it('should call the database', () => {
       rolesService.update({} as UpdateRoleDto);
       expect(rolesService.update).toBeCalledTimes(1);
@@ -107,11 +107,11 @@ describe('RoleController (e2e)', () => {
 
   describe('/roles (DELETE)', () => {
     jest.spyOn(rolesService, 'delete');
- 
+
     it('should be defined', () => {
       expect(rolesService.delete).toBeDefined();
     });
- 
+
     it('should call the database', () => {
       rolesService.delete(1);
       expect(rolesService.delete).toBeCalledTimes(1);
@@ -129,7 +129,7 @@ describe('Role', () => {
       expect(response.status).toBe(200);
     });
   });
- 
+
   describe('GET: roles/:id', () => {
     it('should have the response', async () => {
       const response = await apiRequest.get('roles/1');
@@ -139,14 +139,14 @@ describe('Role', () => {
 
   describe('POST: roles', () => {
     it('should have the response', async () => {
-      const response = await apiRequest.post('roles').send({name: "Staff"});
+      const response = await apiRequest.post('roles').send({ name: 'Staff' });
       expect(response.status).toBe(201);
     });
   });
 
   describe('PUT: roles/:id', () => {
     it('should have the response', async () => {
-      const response = await apiRequest.put('roles').send({name: "Staff"});
+      const response = await apiRequest.put('roles').send({ name: 'Staff' });
       expect(response.status).toBe(201);
     });
   });

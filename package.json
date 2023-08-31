@@ -21,6 +21,7 @@
     "typeorm": "ts-node ./node_modules/typeorm/cli",
     "migration:run": "nest build && npm run typeorm migration:run -- -d ./src/config/typeorm.ts",
     "migration:create": "npm run typeorm -- migration:create",
+    "migration:generate": "npm run typeorm -- migration:generate",
     "migration:revert": "nest build && npm run typeorm -- -d ./src/config/typeorm.ts migration:revert",
     "entity:create": "ts-node ./cli/entity.cli.ts",
     "service:create": "ts-node ./cli/service.cli.ts"

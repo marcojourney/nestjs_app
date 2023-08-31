@@ -16,7 +16,9 @@ export class OAuth2Service {
     private jwtService: JwtService,
   ) {}
 
-  async register(registerClientBody: RegisterClientBody) {}
+  async register(registerClientBody: RegisterClientBody) {
+    //todo statement
+  }
 
   async authorize(appId: string, redirectUri: string) {
     const client = await this.clientRepository.findOne({ where: { appId } });

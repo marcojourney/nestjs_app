@@ -8,19 +8,19 @@ export class Owner {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   name: string;
 
-  @Column({ enum: ['user', 'admin'] })
+  @Column({ enum: ['user', 'admin'], default: 'user', nullable: true })
   role: Role;
 
-  @Column()
+  @Column({ nullable: true })
   type: Type;
 
-  @Column()
+  @Column({ nullable: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   phone_number: string;
 
   @OneToMany(() => Cat, (cat) => cat.owner)
