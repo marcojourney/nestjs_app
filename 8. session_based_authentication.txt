@@ -1,4 +1,7 @@
-Sure. Session-based authentication is a type of authentication where the server maintains a session for each user. This session data is stored on the server and is used to authenticate the user for subsequent requests. Session-based authentication is relatively simple to implement, but it can be less scalable and secure than token-based authentication.
+Sure. Session-based authentication is a type of authentication where the server maintains a session for each user. 
+This session data is stored on the server and is used to authenticate the user for subsequent requests. 
+Session-based authentication is relatively simple to implement, 
+but it can be less scalable and secure than token-based authentication.
 
 Here are the steps involved in session-based authentication:
 
@@ -11,11 +14,15 @@ Here are the steps involved in session-based authentication:
 
 Session-based authentication is a simple and straightforward way to authenticate users. However, it can be less scalable and secure than token-based authentication. Here are some of the drawbacks of session-based authentication:
 
-* **Scalability:** Session-based authentication can be less scalable than token-based authentication because the server needs to maintain a session for each user. If there are a large number of users, the server can become overloaded.
-* **Security:** Session data can be vulnerable to attack. If an attacker were to gain access to the session data, they would be able to impersonate the user.
-* **Session fixation:** Session fixation is an attack where the attacker tricks the user into accepting a session ID that the attacker controls. This allows the attacker to take control of the user's session.
+* **Scalability:** Session-based authentication can be less scalable than token-based authentication because the server needs to maintain a session for each user. 
+                   If there are a large number of users, the server can become overloaded.
+* **Security:** Session data can be vulnerable to attack. If an attacker were to gain access to the session data, 
+                    they would be able to impersonate the user.
+* **Session fixation:** Session fixation is an attack where the attacker tricks the user into accepting a session ID that the attacker controls.
+                This allows the attacker to take control of the user's session.
 
-Overall, session-based authentication is a simple and straightforward way to authenticate users. However, it can be less scalable and secure than token-based authentication.
+Overall, session-based authentication is a simple and straightforward way to authenticate users. 
+However, it can be less scalable and secure than token-based authentication.
 
 Here are some of the best practices for session-based authentication:
 

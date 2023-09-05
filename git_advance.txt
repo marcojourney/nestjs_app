@@ -3,7 +3,7 @@ git diff HEAD~1 HEAD
 git stash [-m]
 git stash list
 git stash clear
-git staff apply <stash_entry_name>
+git stash apply <stash_entry_name>
 git stash pop <stash_entry_name>: You can also pop a stash entry, which will remove it from the stash list and restore the changes to the working directory and the index.
 git revert <commit_hash>: to undo a commit without losing the changes. This can be useful if you made a mistake in a commit but you still want to keep the changes.
 git reset <mode> <commit_hash>:  to undo changes that have been committed to the repository. This can be useful if you made a mistake in a commit or if you want to start over on a branch.

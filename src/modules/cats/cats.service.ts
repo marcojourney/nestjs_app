@@ -13,10 +13,16 @@ export class CatsService {
 
   async getAll(option: FilterOptions): Promise<CatDto[]> {
     const findOption: FindOption = {
-      skip: Number(option.offset),
-      take: Number(option.limit),
       relations: { owner: true },
     };
+
+    if (option.offset) {
+      findOption.skip = Number(option.offset);
+    }
+
+    if (option.limit) {
+      findOption.take = Number(option.limit);
+    }
 
     const cats: CatDto[] = await this.catsRepository.find(findOption);
     return cats;

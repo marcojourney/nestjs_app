@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Repository, DataSource } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import * as crypto from 'crypto';
 import { CreateBankAccountDto } from './dto/create-bank_account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank_account.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { BankAccount } from './entities/bank_account.entity';
 
 @Injectable()
@@ -13,27 +14,21 @@ export class BankAccountService {
     private dataSource: DataSource,
   ) {}
 
-  // async createBankAccount(bankAccountDto: CreateBankAccountDto) {
-  //   let bankAccount: CreateBankAccountDto;
-  //   const queryRunner = this.dataSource.createQueryRunner();
-  //   await queryRunner.connect();
-  //   await queryRunner.startTransaction();
-  //   const manager: EntityManager = queryRunner.manager;
-
-  //   try {
-  //     const encryptedBankAccNo: string = Util.getInstance().rsaEncrypt(bankAccountDto.account_number);
-  //     console.log("DDDDD:", encryptedBankAccNo);
-  //     bankAccount = await manager.save(bankAccountDto);
-  //   } catch (error) {
-  //     await queryRunner.rollbackTransaction();
-  //   } finally {
-  //     await queryRunner.release();
-  //   }
-
-  //   return bankAccount;
-  // }
+  private encyptBankAccount(bankAccount: string) {
+    const { publicKey } = crypto.generateKeyPairSync("rsa", { modulusLength: 3072 });
+    const encryptedData = crypto.publicEncrypt(
+        {
+            key: publicKey,
+            padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+            oaepHash: "sha512",
+        },
+        Buffer.from(bankAccount, 'utf-8')
+    );
+    return encryptedData.toString("base64");
+  }
 
   async createBankAccount(bankAccountDto: CreateBankAccountDto) {
+    bankAccountDto.account_number = this.encyptBankAccount(bankAccountDto.account_number);
     const bankAccount = await this.bankAccountRepository.save(bankAccountDto);
     return bankAccount;
   }

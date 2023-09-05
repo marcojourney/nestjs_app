@@ -19,6 +19,9 @@ export class Session {
   ip: string;
 
   @Column()
+  location: string;
+
+  @Column()
   userAgent: string;
 
   @CreateDateColumn()

@@ -11,13 +11,14 @@ import { RefreshTokenStrategy } from './refresh-token.strategy';
 import { Client } from '../clients/entities/client.entity';
 import { OauthController } from './oauth2.controller';
 import { OAuth2Service } from './oauth2.service';
+import { SessionRepository } from './session.repository';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Client, User, Session]),
     JwtModule.register({
       global: true,
-      secret: 'kolap',
+      secret: process.env.JWT_ACCESS_SECRET,
       signOptions: { expiresIn: '60s' },
     }),
   ],
@@ -26,6 +27,7 @@ import { OAuth2Service } from './oauth2.service';
     AuthService,
     OAuth2Service,
     JwtService,
+    SessionRepository,
     ConfigService,
     AccessTokenStrategy,
     RefreshTokenStrategy
