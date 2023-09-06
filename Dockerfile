@@ -1,13 +1,11 @@
-FROM node:18-alpine
-
-WORKDIR /app
+FROM node:18
+# Set working directory
+WORKDIR /
 
 COPY package.json .
 
 # Install application dependencies
-RUN npm install --production
-
-RUN npm install bcrypt
+RUN yarn install
 
 # Install PM2 globally
 RUN npm install -g pm2
@@ -23,7 +21,8 @@ EXPOSE 3000
 
 # Start the application using PM2
 # CMD ["pm2-runtime", "start", "pm2.config.js"]
-CMD ["pm2-runtime", "dist/src/main.js"]
+# CMD ["pm2-runtime", "server.js"]
+CMD ["npm", "run", "start:dev"]
 
 # docker build -t your-app-name .
 # docker run -d -p 3000:8080 your-app-name
