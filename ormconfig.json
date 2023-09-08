@@ -10,7 +10,8 @@
        "src/entity/**/*.ts"
     ],
     "migrations": [
-       "dist/database/migrations/*{.ts. .js}"
+       "dist/database/migrations/*{.ts. .js}",
+       "dist/database/seeders/*{.ts. .js}"
     ],
     "subscribers": [
        "src/subscriber/**/*.ts"

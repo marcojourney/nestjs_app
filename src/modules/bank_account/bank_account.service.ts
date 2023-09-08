@@ -5,6 +5,7 @@ import * as crypto from 'crypto';
 import { CreateBankAccountDto } from './dto/create-bank_account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank_account.dto';
 import { BankAccount } from './entities/bank_account.entity';
+// import { Transaction } from '../transaction/transaction.entity';
 
 @Injectable()
 export class BankAccountService {
@@ -33,8 +34,15 @@ export class BankAccountService {
     return bankAccount;
   }
 
+
   async findAll(): Promise<BankAccount[]> {
-    const bankAccounts: BankAccount[] = await this.bankAccountRepository.find();
+    const bankAccounts: BankAccount[] = await this.bankAccountRepository
+    .find();
+    // const records = await this.bankAccountRepository.createQueryBuilder('ba')
+    // .innerJoinAndMapMany('ba.transaction', Transaction, 't', 'ba.id = t.bank_account_id')
+    // .getMany();
+    // console.log('records', records);
+
     return bankAccounts;
   }
 

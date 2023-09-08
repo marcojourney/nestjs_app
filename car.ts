@@ -78,6 +78,16 @@ console.log("Keys:", keys);
 let inOperator = { a: 1, b: 'hello'};
 console.log("In Operator:", 'a' in inOperator);
 
+//Immutable Types
+const ErrorMessages = {
+    InvalidEmail: "Invalid email",
+    InvalidPassword: "Invalid password",
+    // ...
+} as const;
+  
+// This will throw an error
+// ErrorMessages.InvalidEmail = "New error message";
+
 //There are three levels of generics in 
 /**
  * Type parameter: This is the most basic level of generics. 
