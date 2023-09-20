@@ -87,7 +87,7 @@ describe('RolesController', () => {
     jest.spyOn(mockRolesService, 'findOne').mockReturnValue(role);
 
     //act
-    const result = await controller.findOne(id);
+    const result = await controller.findOne(+id);
 
     expect(result).toEqual(role);
     expect(mockRolesService.findOne).toBeCalled();
@@ -96,7 +96,7 @@ describe('RolesController', () => {
 
   it('update => should find a role by a given id and update its data', async () => {
     //arrange
-    const id = '1';
+    const id = 1;
     const updateRoleDto = {
       firstname: 'Chadwick',
       lastname: 'Boseman',
@@ -120,7 +120,7 @@ describe('RolesController', () => {
   });
 
   it('remove => should find a role by a given id, remove and then return Number of affected rows', async () => {
-    const id = '1';
+    const id = 1;
     const role = {
       id: 1,
       name: 'Admin',
