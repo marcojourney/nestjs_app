@@ -1,0 +1,14 @@
+{
+   "basePath": "./app",
+   "directories": [
+      "common",
+      "controller",
+      "dto",
+      "entities",
+      "guard",
+      "interfaces",
+      "providers",
+      "repositories",
+      "services"
+   ]
+}

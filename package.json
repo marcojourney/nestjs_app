@@ -4,7 +4,7 @@
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -23,6 +23,7 @@
     "migration:create": "npm run typeorm -- migration:create",
     "migration:generate": "npm run typeorm -- migration:generate",
     "migration:revert": "nest build && npm run typeorm -- -d ./src/config/typeorm.ts migration:revert",
+    "module:create": "ts-node ./cli/module.cli.ts",
     "entity:create": "ts-node ./cli/entity.cli.ts",
     "service:create": "ts-node ./cli/service.cli.ts"
   },
