@@ -1,6 +1,26 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
+import { Column } from './column';
 
-export class Cats1690865705696 implements MigrationInterface {
+export class BaseMigration implements MigrationInterface {
+  protected tableName = 'Student';
+
+  private generateRawSQLFromColumns(): Column[] {
+    return [
+      {
+        name: 'id',
+        type: 'int',
+        primary: true,
+        nullable: true,
+        auto: true,
+      },
+      // {
+      //   name: 'name',
+      //   type: 'varchar',
+      //   length: 255,
+      //   nullable: true,
+      // },
+    ];
+  }
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
         CREATE TABLE cat (
