@@ -1,14 +1,34 @@
 {
    "basePath": "./app",
    "directories": [
-      "common",
+      {
+         "name": "common",
+         "file": "common"
+      },
       "controller",
-      "dto",
-      "entities",
+      {
+         "name": "dto",
+         "file": "index"
+      },
+      "entity",
       "guard",
-      "interfaces",
-      "providers",
-      "repositories",
-      "services"
+      {
+         "name": "interfaces",
+         "file": "interface"
+      },
+      {
+         "name": "providers",
+         "entryFile": "index",
+         "file": "provider"
+      },
+      {
+         "name": "repositories",
+         "entryFile": "index",
+         "file": "repository"
+      },
+      {
+         "name": "services",
+         "file": "service"
+      }
    ]
 }

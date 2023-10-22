@@ -1,6 +1,6 @@
 
 /**
- * File: {name}.provider.ts
+ * File: Role.provider.ts
  * Description: This TypeScript file contains example code.
  * Author: Unknown
  * Created At: October 15, 2023
@@ -12,15 +12,15 @@ import {
    } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
-import { {entity} } from '../entities';
-import { {repMethodName} } from '../repositories';
+import { Role } from '../entities';
+import { RoleRepositoryMethods } from '../repositories';
 
-export const {name}RepositoryProvider = {
-  provide: getRepositoryToken({entity}),
+export const RoleRepositoryProvider = {
+  provide: getRepositoryToken(Role),
   inject: [getDataSourceToken()],
   useFactory(dataSource: DataSource) {
-    return dataSource.getRepository({entity}).extend({repMethodName});
+    return dataSource.getRepository(Role).extend(RoleRepositoryMethods);
   }
 };
 
-export const Inject{entity}Repository = () => InjectRepository({entity});
+export const InjectRoleRepository = () => InjectRepository(Role);

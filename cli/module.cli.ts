@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yargs from 'yargs';
-import { capitalizeString } from './help';
 // import { hideBin } from 'yargs/helpers';
 
 // Import your entity and service creation functions here
@@ -12,7 +11,7 @@ const argv = yargs
   .demandOption(['n'], 'Please provide both -n options')
   .alias('n', 'moduleName').argv;
 
-const moduleName = argv['moduleName'];
+const moduleName: string = argv['moduleName'];
 
 const configPath = path.join(`${__dirname}/..`, 'config.cli.json');
 
@@ -34,29 +33,63 @@ fs.readFile(configPath, { encoding: 'utf8' }, (error, data) => {
     }
 
     //create all nested directory in module
-    moduleDirectories.forEach((directory) => {
+    moduleDirectories.forEach((directory: any) => {
       //directory inside module such as common, service, repository etc.
-      const subDirOfModule = `${modulePath}/${directory}`;
+      let directoryName: string;
+      let entryFileName: string;
+      let templateName: string;
+      let fileNameToCreate: string;
+
+      if (typeof directory == 'string') {
+        directoryName = directory;
+        templateName = directory;
+        fileNameToCreate = `${moduleName.toLocaleLowerCase()}.${directoryName}.ts`;
+      } else {
+        directoryName = directory.name;
+        entryFileName = directory?.entryFile;
+        templateName = directory.file;
+        fileNameToCreate = `${moduleName.toLocaleLowerCase()}.${
+          directory.file
+        }.ts`;
+      }
+
+      const subDirOfModule = `${modulePath}/${directoryName}`;
       if (!fs.existsSync(subDirOfModule)) {
         fs.mkdirSync(subDirOfModule, { recursive: true });
 
         // Absolute path link to template file of cli
-        const templateName = directory;
         const templateFile = `${__dirname}/${templatePath}/${templateName}.template.txt`;
 
         if (fs.existsSync(templateFile)) {
-          const content = fs.readFileSync(templateFile, 'utf-8');
+          let content = fs.readFileSync(templateFile, 'utf-8');
 
+          // Use module name as prefix of class name
           const className = moduleName;
-          const serviceContent = content.replace(/{name}/g, className);
+          const entityName = moduleName;
 
-          const typeOfClass = subDirOfModule;
-          const fileName = `${capitalizeString(className)}${capitalizeString(
-            typeOfClass,
-          )}.ts`;
-          const pathFile = `${modulePath}/${fileName}`;
-          console.log('dddd:', pathFile);
-          // fs.writeFileSync(pathFile, serviceContent);
+          const prefixRepMethodName = entityName;
+          const repMethodName = `${prefixRepMethodName}RepositoryMethods`;
+
+          content = content.replace(/{name}/g, className);
+          content = content.replace(/{entity}/g, entityName);
+          content = content.replace(/{repMethodName}/g, repMethodName);
+
+          const serviceContent = content;
+          fs.writeFileSync(
+            `${subDirOfModule}/${fileNameToCreate}`,
+            serviceContent,
+          );
+
+          // Check if index file is defined to create from config.cli.json
+          if (entryFileName) {
+            console.log('try to create entry file');
+            fs.writeFileSync(
+              `${subDirOfModule}/index.ts`,
+              `
+              export * from './${className}.${templateName}';\n
+            `,
+            );
+          }
         }
       }
     });

@@ -1,0 +1,29 @@
+import { PaginationDto } from '@core/classes';
+import { 
+   IsOptionalEnum, 
+   IsOptionalString, 
+   IsOptionalArrayString, 
+   IsNotEmptyString, 
+   IsOptionalNumber
+} from '@core/decorators';
+import { TransformToStringArray } from '@core/transformer';
+
+export class ListQuery extends PaginationDto {
+  @IsOptionalString()
+  id?: string;
+}
+
+export class CreateBody {
+  @IsOptionalString()
+  name?: string;
+}
+
+export class UpdateBody {
+  @IsOptionalString()
+  name?: string;
+}
+
+export class Param {
+  @IsNotEmptyString()
+  id!: string;
+}
