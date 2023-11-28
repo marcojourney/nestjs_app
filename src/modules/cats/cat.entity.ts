@@ -8,9 +8,6 @@ export class Cat {
   id: number;
 
   @Column()
-  ownerId: number;
-
-  @Column()
   name: string;
 
   @Column()

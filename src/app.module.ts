@@ -30,8 +30,8 @@ import { Client } from './modules/clients/entities/client.entity';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: RolesGuard
-    }
+      useClass: RolesGuard,
+    },
   ],
   imports: [
     ConfigModule.forRoot(),
@@ -51,9 +51,11 @@ import { Client } from './modules/clients/entities/client.entity';
         Customer,
         Transaction,
         BankAccount,
-        Session
+        Session,
       ],
       logging: true,
+      synchronize: false,
+      retryDelay: 10000,
     }),
     CatsModule,
     OwnersModule,
@@ -63,7 +65,7 @@ import { Client } from './modules/clients/entities/client.entity';
     TransactionModule,
     BankAccountModule,
     RolesModule,
-    ClientsModule
+    ClientsModule,
   ],
 })
 export class AppModule {}

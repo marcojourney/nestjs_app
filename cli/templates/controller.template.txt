@@ -1,0 +1,48 @@
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Auth, AuthUser, IAuthUser } from '@authentication/index';
+
+import * as D from '../dto/{name}.dto';
+import { {name}Service } from '../service';
+
+@ApiTags('{name}')
+@ApiBearerAuth()
+@Controller()
+export class {name}Controller {
+  constructor(private readonly service: {name}Service) {}
+
+  @Auth('DEFAULT')
+  @Post()
+  @ApiOperation({ summary: 'Create {name}' })
+  create(@AuthUser() auth: IAuthUser, @Body() body: D.CreateBody) {
+    return this.service.create(auth, body);
+  }
+
+  @Auth('DEFAULT')
+  @Get()
+  @ApiOperation({ summary: 'Fetch {name} list' })
+  list(@Query() query: D.ListQuery) {
+    return this.service.list(query);
+  }
+
+  @Auth('DEFAULT')
+  @Get(':id')
+  @ApiOperation({ summary: 'Fetch {name} detail' })
+  detail(@Param() { id }: D.Param) {
+    return this.service.detail(id);
+  }
+
+  @Auth('DEFAULT')
+  @Put(':id')
+  @ApiOperation({ summary: 'Update {name}' })
+  update(@AuthUser() auth: IAuthUser, @Param() { id }: D.Param, @Body() body: D.UpdateBody) {
+    return this.service.update(auth, id, body);
+  }
+
+  @Auth('DEFAULT')
+  @Delete(':id')
+  @ApiOperation({ summary: 'Toggle {name} status' })
+  toggleStatus(@AuthUser() auth: IAuthUser, @Param() { id }: D.Param) {
+    return this.service.toggleStatus(auth, id);
+  }
+}
