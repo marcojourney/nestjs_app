@@ -1,4 +1,5 @@
-Docker and Docker Compose serve different purposes, and while Docker can be used independently, Docker Compose is a valuable tool that complements Docker in various ways. Here are the key reasons why Docker might benefit from Docker Compose, along with the usages of Docker Compose:
+Docker and Docker Compose serve different purposes, and while Docker can be used independently, Docker Compose is a valuable tool that complements Docker in various ways. 
+Here are the key reasons why Docker might benefit from Docker Compose, along with the usages of Docker Compose:
 
 1. Orchestration of Multiple Containers:
 

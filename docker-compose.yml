@@ -15,13 +15,13 @@ services:
     env_file: ./.env
     depends_on:
       - mysql-db
-      - redis
+      - redis-db
     environment:
       NODE_ENV: production
       MYSQL_HOST: mysql-db
       MYSQL_PORT: 3306
       MYSQL_USER: marco
-      MYSQL_PASSWORD: 1al2356M@rn
+      MYSQL_PASSWORD: 12345678
       MYSQL_DATABASE: first_app
       REDIS_HOST: redis
       REDIS_PORT: 6379
@@ -35,10 +35,10 @@ services:
     restart: unless-stopped
     env_file: ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: 1al2356M@rn
+      MYSQL_ROOT_PASSWORD: 12345678
       MYSQL_DATABASE: first_app
       MYSQL_USER: marco
-      MYSQL_PASSWORD: 1al2356M@rn
+      MYSQL_PASSWORD: 12345678
     ports:
       - "3306:3306"
     stdin_open: true
@@ -53,6 +53,21 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
+  
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 12345678
+      MONGO_INITDB_DATABASE: mydatabase
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - default
 
 volumes:
   mysql-data:
