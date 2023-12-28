@@ -143,4 +143,8 @@ export class Util {
     });
     return decrypt.toString(CryptoJS.enc.Utf8);
   }
+
+  public helloWorld() {
+    console.log('Hello World');
+  }
 }

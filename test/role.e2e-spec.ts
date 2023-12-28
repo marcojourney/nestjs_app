@@ -9,6 +9,7 @@ import { User } from 'src/modules/users/entities/user.entity';
 import { RolesController } from 'src/modules/roles/roles.controller';
 import { CreateRoleDto } from 'src/modules/roles/dto/create-role.dto';
 import { UpdateRoleDto } from 'src/modules/roles/dto/update-role.dto';
+import { Util } from '@helpers/util.helper';
 
 describe('RoleController (e2e)', () => {
   let app: INestApplication;
@@ -66,6 +67,7 @@ describe('RoleController (e2e)', () => {
 
     it('should call service.findAll', () => {
       controller.findAll();
+      Util.getInstance().helloWorld();
       expect(rolesService.findAll).toBeCalledTimes(1);
     });
 
