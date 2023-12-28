@@ -1,41 +1,41 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { Column } from './column';
+import { Table } from './table';
+import { generateRawSQLCreateTable, generateRawSQLDropTable } from './helper';
 
 export class BaseMigration implements MigrationInterface {
+  private table: Table;
+
   protected tableName = 'Student';
 
-  private generateRawSQLFromColumns(): Column[] {
-    return [
-      {
-        name: 'id',
-        type: 'int',
-        primary: true,
-        nullable: true,
-        auto: true,
-      },
-      // {
-      //   name: 'name',
-      //   type: 'varchar',
-      //   length: 255,
-      //   nullable: true,
-      // },
-    ];
+  protected columns: Column[] = [
+    {
+      name: 'id',
+      type: 'integer',
+      primary: true,
+      nullable: true,
+      auto: true,
+    },
+    {
+      name: 'name',
+      type: 'varchar',
+      length: 255,
+      nullable: true,
+    }
+  ];
+
+  constructor() {
+    this.table = new Table();
+    this.table.name = this.tableName;
+    this.table.columns = this.columns;
   }
+
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`
-        CREATE TABLE cat (
-            id INT NOT NULL AUTO_INCREMENT,
-            name VARCHAR(255) NOT NULL,
-            breed VARCHAR(255) NOT NULL,
-            color VARCHAR(255) NOT NULL,
-            PRIMARY KEY (id)
-        )
-    `);
+    
+    await queryRunner.query(generateRawSQLCreateTable(this.table));
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`
-        DROP TABLE IF EXISTS cat
-    `);
+    await queryRunner.query(generateRawSQLDropTable(this.table));
   }
 }

@@ -62,7 +62,7 @@ export function getColumn(column: Column) {
   return columnStr;
 }
 
-function generateTypeORMClass(collection: any[]): string {
+export function generateTypeORMClass(collection: any[]): string {
   const className = 'Role';
   let classDefinition = `import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';\n\n`;
   classDefinition += `@Entity()\n`;
