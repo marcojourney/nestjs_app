@@ -1,0 +1,91 @@
+class Survey {
+  id: number;
+  name: string;
+  questions?: Question[];
+  locales?: SurveyLocale[];
+}
+
+class SurveyLocale {
+  id: number;
+  surveyId: number;
+  name: string;
+  localeCode: string;
+}
+
+class Question {
+  id: number;
+  surveyId: number;
+  name: string;
+}
+
+interface RawSurveyData {
+  id: number;
+  name: string;
+  questions?: RawQuestionData[];
+  locales?: RawSurveyLocaleData[];
+}
+
+interface RawSurveyLocaleData {
+  id: number;
+  surveyId: number;
+  name: string;
+  localeCode: string;
+}
+
+interface RawQuestionData {
+  id: number;
+  surveyId: number;
+  name: string;
+}
+
+function mapRawSurveyToClass(rawSurvey: RawSurveyData): Survey {
+  const survey = new Survey();
+  survey.id = rawSurvey.id;
+  survey.name = rawSurvey.name;
+
+  if (rawSurvey.questions) {
+    survey.questions = rawSurvey.questions.map(mapRawQuestionToClass);
+  }
+
+  if (rawSurvey.locales) {
+    survey.locales = rawSurvey.locales.map(mapRawSurveyLocaleToClass);
+  }
+
+  return survey;
+}
+
+function mapRawSurveyLocaleToClass(
+  rawLocale: RawSurveyLocaleData,
+): SurveyLocale {
+  const locale = new SurveyLocale();
+  locale.id = rawLocale.id;
+  locale.surveyId = rawLocale.surveyId;
+  locale.name = rawLocale.name;
+  locale.localeCode = rawLocale.localeCode;
+  return locale;
+}
+
+function mapRawQuestionToClass(rawQuestion: RawQuestionData): Question {
+  const question = new Question();
+  question.id = rawQuestion.id;
+  question.surveyId = rawQuestion.surveyId;
+  question.name = rawQuestion.name;
+  return question;
+}
+
+// Example usage
+const rawSurveyData: RawSurveyData = {
+  id: 1,
+  name: 'Sample Survey',
+  questions: [
+    { id: 101, surveyId: 1, name: 'Question 1' },
+    { id: 102, surveyId: 1, name: 'Question 2' },
+  ],
+  locales: [
+    { id: 201, surveyId: 1, name: 'English', localeCode: 'en' },
+    { id: 202, surveyId: 1, name: 'Spanish', localeCode: 'es' },
+  ],
+};
+
+const mappedSurvey: Survey = mapRawSurveyToClass(rawSurveyData);
+console.log(mappedSurvey);

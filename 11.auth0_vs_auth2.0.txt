@@ -7,13 +7,13 @@ Auth0 and OAuth 2.0 are both authentication frameworks, but they have different 
 
 Here is a table comparing the two frameworks:
 
-| Feature | Auth0 | OAuth 2.0 |
-|---|---|---|
-| Purpose | Provides a comprehensive identity management platform | Defines a framework for authorization |
-| Provisioning | Managed service | Self-hosted |
-| Features | Authentication, authorization, user management, social login, single sign-on, API protection | Authorization |
-| Complexity | Easy to use | More complex to implement |
-| Cost | Pay-as-you-go | Free for open source projects |
+| Feature      | Auth0           | OAuth 2.0 |
+|--------------|-----------------|-----------------------------------------------------------------------------|
+| Purpose      | Provides a comprehensive identity management platform | Defines a framework for authorization |
+| Provisioning | Managed service | Self-hosted                                                                 |
+| Features     | Authentication, authorization, user management, social login, single sign-on, API protection  | Authorization |
+| Complexity   | Easy to use     | More complex to implement |
+| Cost         | Pay-as-you-go   | Free for open source projects |
 
 Here are some additional things to consider when choosing between Auth0 and OAuth 2.0:
 

@@ -13,26 +13,29 @@ import { RegisterClientBody } from './register.body';
 export class OAuth2Service {
   constructor(
     @InjectRepository(Client) private clientRepository: Repository<Client>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
   async register(registerClientBody: RegisterClientBody) {
-
+    //todo statement
   }
 
   async authorize(appId: string, redirectUri: string) {
-    const client = await this.clientRepository.findOne({where: {appId}});
+    const client = await this.clientRepository.findOne({ where: { appId } });
     if (client?.redirectUri !== redirectUri) {
       throw new BadRequestException('Invalid client or redirect URI.');
     }
 
     const payload = {
       appId,
-      appSecret: client.appSecret
+      appSecret: client.appSecret,
     };
 
     // A short life time token will be expired in 10mn
-    const authorizationCode = await this.jwtService.signAsync(payload, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '10m' });
+    const authorizationCode = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_ACCESS_SECRET,
+      expiresIn: '10m',
+    });
 
     const redirectUrl = `${redirectUri}?code=${authorizationCode}`;
     return { redirectUrl };
@@ -40,14 +43,16 @@ export class OAuth2Service {
 
   async login(authorizationCode: string) {
     try {
-      const decoded = await this.jwtService.verifyAsync(authorizationCode, { secret: process.env.JWT_ACCESS_SECRET });
+      const decoded = await this.jwtService.verifyAsync(authorizationCode, {
+        secret: process.env.JWT_ACCESS_SECRET,
+      });
 
       const [accessToken, refreshToken] = await Promise.all([
         this.jwtService.signAsync(
           {
             sub: decoded.appId,
             appI: decoded.appId,
-            scope: ['read']
+            scope: ['read'],
           },
           {
             secret: process.env.JWT_ACCESS_SECRET,
@@ -58,7 +63,7 @@ export class OAuth2Service {
           {
             sub: decoded.appId,
             appI: decoded.appId,
-            scope: ['read']
+            scope: ['read'],
           },
           {
             secret: process.env.JWT_ACCESS_SECRET,
@@ -68,9 +73,10 @@ export class OAuth2Service {
       ]);
 
       return { accessToken, refreshToken };
-
     } catch (error) {
-      throw new UnauthorizedException('Authorization code verification failed.');
+      throw new UnauthorizedException(
+        'Authorization code verification failed.',
+      );
     }
   }
 }
