@@ -9,18 +9,54 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import * as moment from 'moment';
 import { User } from '../users/entities/user.entity';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { Client } from '../clients/entities/client.entity';
+import { SessionRepository } from './session.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Client) private clientRepository: Repository<Client>,
+    private sessionRepository: SessionRepository,
     private jwtService: JwtService,
     private configService: ConfigService,
   ) {}
+
+  private async getTokens(userId: number, userName: string) {
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(
+        {
+          sub: userId,
+          username: userName,
+          scope: 'read',
+          iat: moment().unix(),
+        },
+        {
+          secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
+          expiresIn: '30m',
+        },
+      ),
+      this.jwtService.signAsync(
+        {
+          sub: userId,
+          username: userName,
+        },
+        {
+          secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+          expiresIn: '7d',
+        },
+      ),
+    ]);
+
+    return {
+      userId,
+      accessToken,
+      refreshToken,
+    };
+  }
 
   async basicGenerateToken(appId: string, appSecret: string) {
     const client = await this.clientRepository.findOne({
@@ -161,38 +197,6 @@ export class AuthService {
     );
   }
 
-  async getTokens(id: number, userName: string) {
-    const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(
-        {
-          sub: id,
-          username: userName,
-          role: 'admin',
-          scope: 'read',
-        },
-        {
-          secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-          expiresIn: '30m',
-        },
-      ),
-      this.jwtService.signAsync(
-        {
-          sub: id,
-          username: userName,
-        },
-        {
-          secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-          expiresIn: '7d',
-        },
-      ),
-    ]);
-
-    return {
-      accessToken,
-      refreshToken,
-    };
-  }
-
   async refreshTokens(userId: number, refreshToken: string) {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user || !user.refreshToken)
@@ -210,5 +214,13 @@ export class AuthService {
     await this.updateRefreshToken(user.id, tokens.refreshToken);
 
     return tokens;
+  }
+
+  //Front End is able to request fingerprint by required options and generate identify key.
+  async checkAuthenticate(accessToken: string, userAgent: string) {
+    const session = await this.sessionRepository.findOne({
+      where: { accessToken },
+    });
+    console.log('session:', session);
   }
 }

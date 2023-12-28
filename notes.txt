@@ -1,6 +1,10 @@
 Priority
     1. AWS
-    2. MongoDB
+    2. Google Cloud
+    3. MongoDB
+    4. Cache Server
+    5. Elastic Search
+    6. Microservice
 1. Security
     a. Create entity to map with database[Done]
     b. Implementation authentication[Done]

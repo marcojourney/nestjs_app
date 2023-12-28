@@ -1,7 +1,7 @@
 {
     "type": "mysql",
-    "host": "localhost",
-    "port": 5432,
+    "host": "mysql-db",
+    "port": 3306,
     "username": "marco",
     "password": "1al2356M@rn",
     "database": "first_app",
@@ -10,7 +10,8 @@
        "src/entity/**/*.ts"
     ],
     "migrations": [
-       "dist/database/migrations/*{.ts. .js}"
+       "dist/database/migrations/*{.ts. .js}",
+       "dist/database/seeders/*{.ts. .js}"
     ],
     "subscribers": [
        "src/subscriber/**/*.ts"

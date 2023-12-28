@@ -1,8 +1,8 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { BankAccount } from './entities/bank_account.entity';
 import { HttpCode } from 'src/https_code';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { BankAccountStatus } from 'src/enums/bank_account_status.enum';
 
 export class BankAccountRepository extends Repository<BankAccount> {
